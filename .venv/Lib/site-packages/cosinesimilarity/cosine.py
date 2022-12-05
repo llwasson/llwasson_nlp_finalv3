@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May  8 12:37:45 2021
+
+@author: avik_
+"""
+
+def cosineSimilarity(text1,text2):
+    """
+    Install nltk
+    Input : Two Sentences
+    """
+    import nltk
+    nltk.download('stopwords')
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+    
+    # Lower texts
+    X = text1.lower()
+    Y = text2.lower()
+    # Tokenize
+    X_list = word_tokenize(X)
+    Y_list = word_tokenize(Y)
+    
+    # Stopwords
+    sw = stopwords.words('english')
+    l1 = []
+    l2 = []
+    
+    # Creating the set of tokens
+    X_set = {w for w in X_list if not w in sw }
+    Y_set = {w for w in Y_list if not w in sw }
+    
+    rvector = X_set.union(Y_set)
+    
+    for w in rvector:
+        if w in X_set: l1.append(1)
+        else: l1.append(0)
+        if w in Y_set: l2.append(1)
+        else: l2.append(0)
+    c = 0
+    
+    for i in range(len(rvector)):
+        c+= l1[i] * l2[i]
+    
+    cosine = c / float((sum(l1)*sum(l2))**0.5)
+    
+    print("Similarity : ", cosine)
+    
+    return cosine
+
+# text1 = "I am Avik "
+# text2 = "I am Prava"
+# cosineSimilarity(text1,text1)

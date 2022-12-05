@@ -1,0 +1,30 @@
+Metadata-Version: 2.1
+Name: cosine-similarity
+Version: 0.1.2
+Summary: This package help you to calculate similarity of texts.
+Home-page: https://github.com/avikdas29
+Author: Avik Das
+Author-email: avik_das_2017@cba.isb.edu
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/avikdas29
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 2
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=2.0
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+**#Developer : Avik Das**
+
+*## Calculate Similarity* 
+
+*How to run this package*
+
+from cosinesimilarity import cosine
+cosine.cosineSimilarity(text1,text1)
+
+
+*Return the exception details as well *
+
+
