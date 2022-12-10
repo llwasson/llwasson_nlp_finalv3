@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>Top navbar example · Bootstrap v5.1</title>
+    <title>Occupational Matching System</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/navbar-static/">
 
@@ -68,8 +68,25 @@
 
 <main class="container">
   <div class="bg-light p-5 rounded" style="background-color: #4472C4;">
-    <h1>Methodology</h1>
-    <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
+    <h3>Methodology</h3>
+    <p class="lead">This application is called the Occupational Matching System.  The purpose of this application is to match a person's resume to occupational descriptions within the system and to return the occupations that have the most similarity to the resume.  This tool can be beneficial for someone seeking a career change and is interested in doing something similar to what they are currently doing but in a different occupation.  Additionally, this tool provides an employment outlook for the occupations that are returned, showing “positive” if the occupation is likely to grow into the future and “negative” if an occupation is expected to decline.</p>
+
+    <p class="lead">The front end used was Flask, HTML, CSS, and Javascript.  I used a template in Bootstrap 5.1.3 (Examples · Bootstrap v5.1 (getbootstrap.com)) to assist with the styling of the page.  The front end is very simple.  The color theme is blue with the menu options in the upper right corner of the page (Home and Methodology).  A very simple form was created for the user to enter their resume ID and the number of occupations that they want to view.</p>
+    <p class="lead">As for the backend, this application was written in Python.  I used the WT-Forms library to simplify form creation and to easily build in form validation for the values entered.  I used the sklearn.feature_extraction.text to import the TfidfVectorizer for the purpose of breaking both the occupational descriptions and the resume into features.  The sklearn.metrics.pairwise was used to import cosine_similarity, which is what I used to determine the similarity between the resume and the occupations, selecting the top N occupations with the greatest cosine similarity, where N is the number of occupations that the data user requests.</p>
+    <p class="lead">Preprocessing of the data was done in Jupyter Notebook prior to importing the data into the web application.  I normalized the text files using the text_normalizer function that was provided in class.  I removed all stopwords and performed lemmatization.   I used Pandas to create the dataframes  of the different datasets.  Beautiful Soup was used to remove some HTML tags from the job outlook text derived from an XML file from the Bureau of Labor Statistics website.  I then used xml.etree.ElementTree import parse to extract the needed information from the file.</p>
+    <p class="lead">The sentiment analysis done on the job outlook corpus was done using SentiWordNet.  I trained various models on the corpus by using AFINN, VADER, and TextBlob in addition to SentiWordNet.  The prediction metrics were the best using SentiwordNet, so that was what I opted to use in my web application.</p>
+    <p class="lead">As for additional tools, Heroku was the deployment platform I used.  I also used Visual Studio Code to write the web application.  I didn’t use a database but instead, used CSV files generated from Python for all the normalized text.  Then I used the Python pickle module on the CSV files to serialize/deserialize Python object structures and for portability into Flask.</p>
+    
+    <h3>Data Used</h3>
+    <p class="lead">I pulled the data in from various sources.  The occupational descriptions, job tasks, education requirements, and technology skills in which I matched the resume data to came from O*NET Online at https://www.onetcenter.org/database.html#individual-files.  O*NET provides a formal classification system of all occupations with standardized descriptions for each occupation.  </p>
+    <p class="lead">The source of the job outlook data was pulled from the Occupational Outlook Handbook, published by the Bureau of Labor Statistics, at https://www.bls.gov/ooh/.  I downloaded an XML file from the website to obtain the information and then used the xml.etree.ElementTree import parse to extract the needed information from the file.  It was this data that I did the sentiment analysis on.</p>
+    <p class="lead">The resume text that I matched to the occupational descriptions to came from Kaggle at https://www.kaggle.com/datasets/snehaanbhawal/resume-dataset?resource=download.  The text file contained resume samples that were web scraped from www.livecareer.com and classified into various groups.  Around 2,500 resumes were in this file.  I pulled the resume IDs from the file to test the application.  </p>
+
+    <h3>Functionalities</h3>
+    <p class="lead">All of the action occurs on the home page of the web application.  A form with two fields was created using WT-Forms.  One field is for the resume ID and the other is for the user to select the number of occupations that they want returned.  A limit was placed on the number of occupations so as not to overburden the webserver with a large number of results returned.  I used validation on both fields.  Both fields required a value and both had to be integer values.  A user could select anywhere from 1 to 20 occupations to be viewed.  </p>
+    <p class="lead">Once this information is entered and submitted, the user is taken to a page with a table listing the occupations that are the best fit for their job experience based on their resume.  A “positive” or a “negative” job outlook into the future was based on the sentiment analysis and provided for the occupations returned.</p>
+    <p class="lead">In cases where a resume ID was not found in the file (“database”), the user was then directed to a page stating that their resume was not found in the system.</p>
+    <p class="lead">Here, we are assuming that the person has already registered in the system by providing their resume data and the person is provided with an ID to look up their occupation matches.  In the class demonstration created for this project, I used resume IDs 1000, 32954522, and 20932019.  A file named cleaned_resume_corpus_sample.csv has been provided with some resume IDs for further testing of the application.</p>
   </div>
 </main>
 
